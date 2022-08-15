@@ -25,5 +25,7 @@ bld/
 [Ll]og/
 [Ll]ogs/
 
+# Build and Test Output
 ./[vgcore*]
 ./[*.out]
+bubble
