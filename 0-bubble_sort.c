@@ -17,7 +17,7 @@ void bubble_sort(int *array, size_t size)
 
 	if (fp == NULL || array == NULL)
 	{
-		return;
+		exit(EXIT_FAILURE);
 	}
 	if (size > 1)
 	{
