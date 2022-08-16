@@ -64,8 +64,8 @@ void partition(int *array, int left, int right, int size)
 void quick_sort(int *array, size_t size)
 {
 	int left = 0, right = size - 1;
-	char *best_case = "n * log n", *average_case = "n * logn";
-	char *worst_case = "n * n";
+	char *best_case = "nlog(n)", *average_case = "nlog(n)";
+	char *worst_case = "n^2";
 	FILE *fp = fopen("3-O", "w");
 
 	if (fp == NULL || array == NULL)
