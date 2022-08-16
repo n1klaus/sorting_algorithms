@@ -9,7 +9,7 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	char *best_case = "n", *average_case = "n * n", *worst_case = "n * n";
+	char *best_case = "n", *average_case = "n^2", *worst_case = "n^2";
 	listint_t **head = (listint_t **)list;
 	listint_t *temp = NULL;
 	listint_t *curr = (listint_t *)(*head)->next;
