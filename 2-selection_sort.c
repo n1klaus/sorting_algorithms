@@ -12,7 +12,7 @@ void selection_sort(int *array, size_t size)
 {
 	size_t index = 0, min = 0, pos = 0;
 	ssize_t temp = 0;
-	char *best_case = "n", *average_case = "n * n", *worst_case = "n * n";
+	char *best_case = "n^2", *average_case = "n^2", *worst_case = "n^2";
 	FILE *fp = fopen("2-O", "w");
 
 	if (fp == NULL || array == NULL)
