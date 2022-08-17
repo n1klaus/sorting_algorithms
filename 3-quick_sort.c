@@ -17,38 +17,39 @@ void swap(int a[], int i, int j)
 }
 
 /**
- * partition - partition @array into sub-arrays
+ * partition - partition @array of @size into sub-arrays
  * using @left as lower bound and @right as higher bound
  * @array : array of elements
- * @left : left index position
- * @right : right index position
+ * @left : left most index position
+ * @right : right most index position
  * @size : size of the array
  *
- * Return : pivot index
+ * Return : Nothing
  */
 void partition(int *array, int left, int right, int size)
 {
-	int index, mid, pivot, low = left;
+	int NOTSORTED = 1, pivot, mid, low = left - 1, high = right + 1;
 
-	mid = (left + right) / 2;
-	pivot = array[mid];
 	if (left >= right)
 		return;
-	for (index = left; index <= right; index++)
+	pivot = array[(left + right) / 2];
+
+	while (NOTSORTED)
 	{
-		if (array[index] < pivot && array[index] < array[low])
-		{
-			swap(array, low++, index);
-			print_array(array, size);
-		}
-		else if (array[index] < pivot && index > mid)
-		{
-			swap(array, mid, index);
-			print_array(array, size);
-		}
+		do {
+			low++;
+		} while (array[low] < pivot);
+		do {
+			high--;
+		} while (array[high] > pivot);
+		if (low >= high)
+			break;
+		swap(array, low, high);
+		print_array(array, size);
 	}
-	partition(array, left, mid, size);
+	mid = high;
 	partition(array, mid + 1, right, size);
+	partition(array, left, mid, size);
 }
 
 /**
@@ -70,6 +71,7 @@ void quick_sort(int *array, size_t size)
 
 	if (fp == NULL || array == NULL)
 	{
+		fclose(fp);
 		exit(EXIT_FAILURE);
 	}
 	partition(array, left, right, size);
