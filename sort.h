@@ -26,5 +26,10 @@ void insertion_sort_list(listint_t **list);
 void selection_sort(int *array, size_t size);
 void quick_sort(int *array, size_t size);
 void shell_sort(int *array, size_t size);
+int traverse_forward(listint_t **head, listint_t **left, listint_t **right);
+int traverse_backward(listint_t **head, listint_t **right, listint_t **left);
+void cocktail_sort_list(listint_t **list);
+void counting_sort(int *array, size_t size);
+void merge_sort(int *array, size_t size);
 
 #endif /* __SORT_H__ */
