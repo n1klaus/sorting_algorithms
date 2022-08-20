@@ -28,14 +28,17 @@ void swap(int a[], int i, int j)
  */
 void partition(int *array, int left, int right, int size)
 {
-	int NOTSORTED = 1, pivot, mid, low = left - 1, high = right + 1;
+	int NOTSORTED = 1, pivot, mid, low, high;
 
 	if (left >= right)
 		return;
-	pivot = array[(left + right) / 2];
+	mid = (left + right) / 2;
+	pivot = array[mid];
 
 	while (NOTSORTED)
 	{
+		low = left - 1;
+		high = right + 1;
 		do {
 			low++;
 		} while (array[low] < pivot);
@@ -53,23 +56,23 @@ void partition(int *array, int left, int right, int size)
 }
 
 /**
- * quick_sort - in-place comparison sorting algorithm for sorting
+ * quick_sort_hoare - in-place comparison sorting algorithm for sorting
  * integer numbers in @array of @size in correct positions by partitioning
  * array into 2 sub-arrays according to whether less or greater than pivot
  * then sorting the sub-arrays recursively in-place by swapping them
- * <-- Lomuto partition scheme -->
+ * <-- Hoare partition scheme -->
  *
  * @array : array of elements
  * @size : size of the array
  *
  * Return: Nothing
  */
-void quick_sort(int *array, size_t size)
+void quick_sort_hoare(int *array, size_t size)
 {
 	int left = 0, right = size - 1;
 	char *best_case = "O(nlogn)", *average_case = "O(nlogn)";
 	char *worst_case = "O(n^2)";
-	FILE *fp = fopen("3-O", "w");
+	FILE *fp = fopen("107-O", "w");
 
 	if (fp == NULL || array == NULL)
 	{
