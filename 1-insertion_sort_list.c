@@ -9,14 +9,15 @@
  */
 void insertion_sort_list(listint_t **list)
 {
-	char *best_case = "n", *average_case = "n^2", *worst_case = "n^2";
+	char *best_case = "O(n)", *average_case = "O(n^2)",
+		*worst_case = "O(n^2)";
 	listint_t **head = (listint_t **)list;
-	listint_t *temp = NULL;
-	listint_t *curr = (*head)->next;
+	listint_t *temp = NULL, *curr = (*head)->next;
 	FILE *fp = fopen("1-O", "w");
 
 	if (fp == NULL || list == NULL)
 		exit(EXIT_FAILURE);
+
 	while (curr != NULL)
 	{
 		temp = curr->prev;
@@ -36,13 +37,11 @@ void insertion_sort_list(listint_t **list)
 					*head = curr;
 				print_list(*head);
 			}
-			else
-				break;
-			temp = curr->prev;
+			temp = temp->prev;
 		}
 		curr = curr->next;
 	}
-	fprintf(fp, "O(%s)\nO(%s)\nO(%s)\n", best_case, average_case,
+	fprintf(fp, "%s\n%s\n%s\n", best_case, average_case,
 		worst_case);
 	fclose(fp);
 }
