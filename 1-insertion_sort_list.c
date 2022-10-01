@@ -12,12 +12,13 @@ void insertion_sort_list(listint_t **list)
 	char *best_case = "O(n)", *average_case = "O(n^2)",
 		*worst_case = "O(n^2)";
 	listint_t **head = (listint_t **)list;
-	listint_t *temp = NULL, *curr = (*head)->next;
+	listint_t *temp = NULL, *curr = NULL;
 	FILE *fp = fopen("1-O", "w");
 
 	if (fp == NULL || list == NULL)
 		exit(EXIT_FAILURE);
 
+	curr = (*head)->next;
 	while (curr != NULL)
 	{
 		temp = curr->prev;
