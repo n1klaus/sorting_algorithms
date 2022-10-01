@@ -1,17 +1,14 @@
 #include "sort.h"
 /**
- * swap - swap two elements @i and @j in an @a
- * @a : array of elements
- * @i : integer number
- * @j : integer number
+ * swap - swap values of two elements @i and @j
+ * @i : pointer to an integer number
+ * @j : pointer to an integer number
  *
  * Return : Nothing
  */
-void swap(int a[], int i, int j)
+void swap(int *i, int *j)
 {
-	int temp;
-
-	temp = a[i];
-	a[i] = a[j];
-	a[j] = temp;
+	int temp = *i;
+	*i = *j;
+	*j = temp;
 }

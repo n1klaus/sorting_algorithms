@@ -1,5 +1,19 @@
 #include "sort.h"
 /**
+ * swap - swap values of two elements @i and @j
+ * @i : pointer to an integer number
+ * @j : pointer to an integer number
+ *
+ * Return : Nothing
+ */
+void swap(int *i, int *j)
+{
+	int temp = *i;
+	*i = *j;
+	*j = temp;
+}
+
+/**
  * bubble_sort - comparison sort algorithm for adjacent
  * integer numbers in @array of @size swapping and
  * putting largest integer number at the top of the list
@@ -10,32 +24,37 @@
  */
 void bubble_sort(int *array, size_t size)
 {
-	size_t index = 0, count = size - 1;
-	ssize_t temp = 0;
-	char *best_case = "n", *average_case = "n^2", *worst_case = "n^2";
+	size_t i = 0, j = 0;
+	bool swapped = false;
+	char *best_case = "O(n)";
+	char *average_case = "O(n^2)";
+	char *worst_case = "O(n^2)";
 	FILE *fp = fopen("0-O", "w");
 
 	if (fp == NULL || array == NULL)
 	{
 		exit(EXIT_FAILURE);
 	}
+
 	if (size > 1)
 	{
-		while (count--)
+		for (i = 0; i < size; i++)
 		{
-			for (index = 0; index < size; index++)
+			swapped = false;
+			for (j = 0; j < size - i; j++)
 			{
-				if (array[index] < array[index - 1])
+				if (array[j] > array[j + 1])
 				{
-					temp = array[index];
-					array[index] = array[index - 1];
-					array[index - 1] = temp;
+					swap(&array[j], &array[j + 1]);
 					print_array(array, size);
+					swapped = true;
 				}
 			}
+			if (!swapped)
+				break;
 		}
 	}
-	fprintf(fp, "O(%s)\nO(%s)\nO(%s)\n", best_case, average_case,
+	fprintf(fp, "%s\n%s\n%s\n", best_case, average_case,
 		worst_case);
 	fclose(fp);
 }
