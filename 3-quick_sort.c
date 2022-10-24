@@ -64,10 +64,11 @@ void partition(int *array, int low, int high, size_t size)
 	if (low < high)
 	{
 		pi = get_partition_index(array, low, high, size);
-		if (pi  == -1)
-			return;
-		partition(array, low, pi - 1, size);
-		partition(array, pi + 1, high, size);
+		if (pi > 0)
+		{
+			partition(array, low, pi - 1, size);
+			partition(array, pi + 1, high, size);
+		}
 	}
 }
 
