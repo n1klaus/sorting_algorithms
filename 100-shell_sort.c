@@ -1,22 +1,5 @@
 #include "sort.h"
 /**
- * swap - swap two elements @i and @j in an @a
- * @a : array of elements
- * @i : integer number
- * @j : integer number
- *
- * Return : Nothing
- */
-void swap(int a[], int i, int j)
-{
-	int temp = 0;
-
-	temp = a[i];
-	a[i] = a[j];
-	a[j] = temp;
-}
-
-/**
  * shell_sort - in-place comparison sorting algorithm by selecting
  * pairs of elements in @array far apart from each other and placing them
  * into their correct positions in the subarray and then
@@ -30,7 +13,7 @@ void swap(int a[], int i, int j)
  */
 void shell_sort(int *array, size_t size)
 {
-	size_t gap = 1, index, pos;
+	size_t gap = 1, index = 0, pos = 0, val = 0;
 
 	if (array == NULL)
 		exit(EXIT_FAILURE);
@@ -38,17 +21,18 @@ void shell_sort(int *array, size_t size)
 	while (gap < (size / 3))
 		gap = (gap * 3) + 1;
 
-	while (gap >= 1)
+	while (gap > 0)
 	{
 		for (index = gap; index < size; index++)
 		{
-			for (pos = index; pos >= gap; pos -= gap)
-			{
-				if (array[pos] < array[pos - gap])
-					swap(array, pos, (pos - gap));
-			}
+			val = array[index];
+			for (pos = index; pos >= val; pos -= gap)
+				array[pos] = array[pos - gap];
+
+			array[pos] = val;
+			print_array(array, size);
 		}
-		print_array(array, size);
-		gap /= 3;
+
+		gap = (gap - 1) / 3;
 	}
 }
