@@ -85,7 +85,7 @@ void partition(int *array, int low, int high, size_t size)
  */
 void quick_sort(int *array, size_t size)
 {
-	char *best_case = "O(nlogn)", *average_case = "O(nlogn)";
+	char *best_case = "O(nlog(n))", *average_case = "O(nlog(n))";
 	char *worst_case = "O(n^2)";
 	FILE *fp = fopen("3-O", "w");
 
