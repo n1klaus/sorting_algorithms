@@ -22,16 +22,28 @@ void swap(int *i, int *j)
  *
  * Return: position of the pivot in the @array
  */
-size_t get_partition_index(int *array, int low, int high, size_t size)
+int get_partition_index(int *array, int low, int high, size_t size)
 {
 	int index = low, pivot = array[high], pi = low - 1;
 
 	for (; index < high; index++)
+	{
 		if (array[index] < pivot)
-			swap(&array[++pi], &array[index]);
-
-	swap(&array[++pi], &array[high]);
-	print_array(array, size);
+		{
+			pi++;
+			if (index != pi)
+			{
+				swap(&array[pi], &array[index]);
+				print_array(array, size);
+			}
+		}
+	}
+	pi++;
+	if (array[high] < array[pi])
+	{
+		swap(&array[pi], &array[high]);
+		print_array(array, size);
+	}
 	return (pi);
 }
 
@@ -52,6 +64,8 @@ void partition(int *array, int low, int high, size_t size)
 	if (low < high)
 	{
 		pi = get_partition_index(array, low, high, size);
+		if (pi  == -1)
+			return;
 		partition(array, low, pi - 1, size);
 		partition(array, pi + 1, high, size);
 	}
