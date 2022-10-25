@@ -19,7 +19,7 @@ void shell_sort(int *array, size_t size)
 	if (array == NULL)
 		exit(EXIT_FAILURE);
 	if (size == 1)
-		exit(EXIT_SUCCESS);
+		return;
 
 	while (gap < (size / 3))
 		gap = (gap * 3) + 1;
