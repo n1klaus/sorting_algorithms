@@ -13,7 +13,8 @@
  */
 void shell_sort(int *array, size_t size)
 {
-	size_t gap = 1, index = 0, pos = 0, val = 0;
+	size_t gap = 1, index = 0, pos = 0;
+	int val = 0;
 
 	if (array == NULL)
 		exit(EXIT_FAILURE);
@@ -26,13 +27,17 @@ void shell_sort(int *array, size_t size)
 		for (index = gap; index < size; index++)
 		{
 			val = array[index];
-			for (pos = index; pos >= val; pos -= gap)
+			pos = index;
+
+			while (pos >= gap && array[pos - gap] > val)
+			{
 				array[pos] = array[pos - gap];
-
-			array[pos] = val;
-			print_array(array, size);
+				pos -= gap;
+			}
+			if (pos != index)
+				array[pos] = val;
 		}
-
+		print_array(array, size);
 		gap = (gap - 1) / 3;
 	}
 }
