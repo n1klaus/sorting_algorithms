@@ -6,16 +6,16 @@
  * @left : left-most node of the doubly linked list
  * @right : right-most node of the doubly linked list
  *
- * Return: 0 if successfull, otherwise 1
+ * Return: true if successful, otherwise false
  */
-int traverse_forward(listint_t **head, listint_t **left, listint_t **right)
+bool traverse_forward(listint_t **head, listint_t **left, listint_t **right)
 {
-	int IS_SWAPPED = 0;
+	bool IS_SWAPPED = false;
 	listint_t *curr = NULL, *temp = NULL;
 
 	if (*head == NULL || *left == NULL || *right == NULL)
-		return (EXIT_FAILURE);
-	for (curr = (*left); curr != NULL && curr >= (*right);
+		return (IS_SWAPPED);
+	for (curr = (*left); curr != NULL && curr > (*right);
 			curr = curr->next)
 	{
 		temp = curr->next;
@@ -27,20 +27,16 @@ int traverse_forward(listint_t **head, listint_t **left, listint_t **right)
 			if (temp->next != NULL)
 				temp->next->prev = curr;
 			curr->next = temp->next;
-			curr->prev = temp;
 			temp->next = curr;
-			IS_SWAPPED = 1;
+			curr->prev = temp;
+			IS_SWAPPED = true;
 			if (temp->prev == NULL)
 				*head = temp;
 			curr = temp;
 			print_list(*head);
 		}
-		if (curr->next == NULL)
-			*right = curr;
 	}
-	if (!IS_SWAPPED)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (IS_SWAPPED);
 }
 
 /**
@@ -50,16 +46,16 @@ int traverse_forward(listint_t **head, listint_t **left, listint_t **right)
  * @left : left-most node of the doubly linked list
  * @right : right-most node of the doubly linked list
  *
- * Return: 0 if successfull, otherwise 1
+ * Return: true if successfull, otherwise false
  */
-int traverse_backward(listint_t **head, listint_t **right, listint_t **left)
+bool traverse_backward(listint_t **head, listint_t **right, listint_t **left)
 {
-	int IS_SWAPPED = 0;
+	bool IS_SWAPPED = false;
 	listint_t *curr = NULL, *temp = NULL;
 
 	if (*head == NULL || *left == NULL || *right == NULL)
-		return (EXIT_FAILURE);
-	for (curr = (*right); curr != NULL && curr <= (*left);
+		return (IS_SWAPPED);
+	for (curr = (*right); curr != NULL && curr < (*left);
 			curr = curr->prev)
 	{
 		temp = curr->prev;
@@ -71,20 +67,16 @@ int traverse_backward(listint_t **head, listint_t **right, listint_t **left)
 			if (temp->prev != NULL)
 				temp->prev->next = curr;
 			curr->prev = temp->prev;
-			temp->prev = curr;
 			curr->next = temp;
-			IS_SWAPPED = 1;
+			temp->prev = curr;
+			IS_SWAPPED = true;
 			if (curr->prev == NULL)
 				*head = curr;
 			curr = temp;
 			print_list(*head);
 		}
-		if (curr->prev == NULL)
-			*left = curr;
 	}
-	if (!IS_SWAPPED)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (IS_SWAPPED);
 }
 
 /**
@@ -98,7 +90,7 @@ int traverse_backward(listint_t **head, listint_t **right, listint_t **left)
  */
 void cocktail_sort_list(listint_t **list)
 {
-	int IS_SWAPPED = 1, result = 0;
+	bool IS_SWAPPED = true, result = false;
 	char *best_case = "O(n)", *average_case = "O(n^2)";
 	char *worst_case = "O(n^2)";
 	listint_t **head = (listint_t **) list,
@@ -116,21 +108,22 @@ void cocktail_sort_list(listint_t **list)
 	while ((*right)->next != NULL)
 		*right = (*right)->next;
 
-	while ((*left) >= (*right) && IS_SWAPPED)
+	while (IS_SWAPPED)
 	{
-		IS_SWAPPED = 0;
+		IS_SWAPPED = false;
 		result = traverse_forward(head, left, right);
-		if (!result)
-			IS_SWAPPED = 1;
-		*right = (*right)->prev;
-		if (IS_SWAPPED)
+		if (result)
 		{
-			IS_SWAPPED = 0;
-			result = traverse_backward(head, right, left);
-			if (!result)
-				IS_SWAPPED = 1;
+			IS_SWAPPED = true;
+			*right = (*right)->prev;
 		}
-		*left = (*left)->next;
+
+		result = traverse_backward(head, right, left);
+		if (result)
+		{
+			IS_SWAPPED = true;
+			*left = (*left)->next;
+		}
 	}
 	fprintf(fp, "%s\n%s\n%s\n", best_case, average_case,
 		worst_case);
