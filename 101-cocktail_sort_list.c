@@ -15,7 +15,7 @@ bool traverse_forward(listint_t **head, listint_t **left, listint_t **right)
 
 	if (*head == NULL || *left == NULL || *right == NULL)
 		return (IS_SWAPPED);
-	for (curr = (*left); curr != NULL && curr > (*right);
+	for (curr = (*left); curr != NULL && curr != (*right);
 			curr = curr->next)
 	{
 		temp = curr->next;
@@ -30,6 +30,10 @@ bool traverse_forward(listint_t **head, listint_t **left, listint_t **right)
 			temp->next = curr;
 			curr->prev = temp;
 			IS_SWAPPED = true;
+			if (curr == *left)
+				*left = temp;
+			if (temp == *right)
+				*right = curr;
 			if (temp->prev == NULL)
 				*head = temp;
 			curr = temp;
@@ -55,7 +59,7 @@ bool traverse_backward(listint_t **head, listint_t **right, listint_t **left)
 
 	if (*head == NULL || *left == NULL || *right == NULL)
 		return (IS_SWAPPED);
-	for (curr = (*right); curr != NULL && curr < (*left);
+	for (curr = (*right); curr != NULL && curr != (*left);
 			curr = curr->prev)
 	{
 		temp = curr->prev;
@@ -70,6 +74,10 @@ bool traverse_backward(listint_t **head, listint_t **right, listint_t **left)
 			curr->next = temp;
 			temp->prev = curr;
 			IS_SWAPPED = true;
+			if (temp == *left)
+				*left = curr;
+			if (curr == *right)
+				*right = temp;
 			if (curr->prev == NULL)
 				*head = curr;
 			curr = temp;
@@ -113,20 +121,20 @@ void cocktail_sort_list(listint_t **list)
 		IS_SWAPPED = false;
 		result = traverse_forward(head, left, right);
 		if (result)
-		{
-			IS_SWAPPED = true;
-			*right = (*right)->prev;
-		}
+			IS_SWAPPED = result;
+		else
+			break;
+		*right = (*right)->prev;
 
 		result = traverse_backward(head, right, left);
 		if (result)
-		{
-			IS_SWAPPED = true;
-			*left = (*left)->next;
-		}
+			IS_SWAPPED = result;
+		else
+			break;
+		*left = (*left)->next;
 	}
-	fprintf(fp, "%s\n%s\n%s\n", best_case, average_case,
-		worst_case);
+
+	fprintf(fp, "%s\n%s\n%s\n", best_case, average_case, worst_case);
 	free(left);
 	free(right);
 	fclose(fp);
