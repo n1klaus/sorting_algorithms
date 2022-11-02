@@ -114,19 +114,16 @@ void split_array(int *copy, int left, int right, int *original)
 void merge_sort(int *array, size_t size)
 {
 	int left = 0, right = size;
-	char *best_case = "O(nlogn)", *average_case = "O(nlogn)";
-	char *worst_case = "O(nlogn)";
+	char *best_case = "O(nlog(n))", *average_case = "O(nlog(n))";
+	char *worst_case = "O(nlog(n))";
 	int *new_array = (int *)malloc(sizeof(int) * size);
 	FILE *fp = fopen("103-O", "w");
 
-	if (fp == NULL || array == NULL || new_array == NULL)
+	if (fp && new_array && size > 1)
 	{
-		fclose(fp);
-		exit(EXIT_FAILURE);
+		copy_array(array, left, right, new_array);
+		split_array(new_array, left, right, array);
 	}
-
-	copy_array(array, left, right, new_array);
-	split_array(new_array, left, right, array);
 
 	fprintf(fp, "%s\n%s\n%s\n", best_case, average_case,
 		worst_case);
