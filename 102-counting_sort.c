@@ -29,13 +29,13 @@ size_t max(int *array, size_t size)
 void counting_sort(int *array, size_t size)
 {
 	size_t index = 0, counter = 0, loc = 0, range = (max(array, size) + 1);
-	char *best_case = "O(nlogn)", *average_case = "O(n)";
-	char *worst_case = "O(n)";
+	char *best_case = "O(n+k)", *average_case = "O(n+k)";
+	char *worst_case = "O(n+k)";
 	int *count = (int *)malloc(sizeof(int) * range), count_ref = 0;
 	int *output = (int *)malloc(sizeof(int) * size);
 	FILE *fp = fopen("102-O", "w");
 
-	if (fp && size > 0)
+	if (fp && size > 1)
 	{
 		for (index = 0; index < range; index++)
 			count[index] = 0;
